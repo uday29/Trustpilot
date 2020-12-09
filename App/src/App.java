@@ -6,13 +6,13 @@ public class App {
 
 	public static void main(String[] args) throws IOException {
 		String word;
-		File wordlist = new File("/Users/Uday Indukuri/Desktop/Possible_Words.txt");
+		File wordlist = new File("/Users/Uday Indukuri/Desktop/Unique_Possible_Words.txt");
 		
 		Scanner input = new  Scanner(wordlist);
 		int length;
 		int maxLength = 0;
 		String largest = "";
-		
+		//Finding largest word in wordlist.
 		while(input.hasNext()) {
 			word = input.nextLine();
 			length = word.length();

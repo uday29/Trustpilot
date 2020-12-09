@@ -9,8 +9,8 @@ public class RabbitHole {
 		String new_phrase = phrase.replaceAll(" ", "").trim();
 		int phrase_length = new_phrase.length();
 		int max_len = 11;
-		String[] words = new String[1788];
-		File wordlist = new File("/Users/Uday Indukuri/Desktop/Possible_Words.txt");
+		String[] words = new String[1659];
+		File wordlist = new File("/Users/Uday Indukuri/Desktop/Unique_Possible_Words.txt");
 		Scanner input = new  Scanner(wordlist);
 		int k=0;
 		while(input.hasNext()) {
@@ -18,7 +18,7 @@ public class RabbitHole {
 			words[k] = input.nextLine();
 			k++;
 		}
-		
+		// Generate all two word pairs that have a combined length '18'.
 		while(max_len>0) {
 			for(int i=0;i<words.length;i++) {
 				for(int j=0;j<words.length;j++) {

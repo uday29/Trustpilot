@@ -8,16 +8,16 @@ import java.util.Scanner;
 
 public class CharFrequency {
 	public static void main(String[] args) throws IOException {
+		
 		String s = "poultry outwits ants";
 		String s_wo_space = s.replaceAll(" ", "").trim();
-		
-		File textfile = new File("/Users/Uday Indukuri/Desktop/Possible_TwoWords_Anagram.txt");
+		File textfile = new File("/Users/Uday Indukuri/Desktop/wordlist (1)");
 		Scanner input = new  Scanner(textfile);
 		
 		HashMap<Character, Integer> hm = new HashMap<Character, Integer>();
-		String TwoWord_Anagrams = "";
+		String Possible_Words = "";
 		
-		//Insert values in hashmap.
+		//Insert character's of phrase in hashmap.
 		for(int i=0; i<s_wo_space.length();i++) {
 			char c = s_wo_space.charAt(i);
 			Integer val = hm.get(c);
@@ -29,41 +29,50 @@ public class CharFrequency {
 				hm.put(c, 1);
 			}
 		}
-				
+		
+//Read words from wordlist and push them through isPossible function. 
 		while(input.hasNext()) {
 		String word = input.nextLine();
 			if(isPossible(word,hm)) {
 				
-				TwoWord_Anagrams = TwoWord_Anagrams.concat(word + "\n");
+				Possible_Words = Possible_Words.concat(word + "\n");
 			}
 		}
-		
-		FileWriter writer = new FileWriter("/Users/Uday Indukuri/Desktop/TwoWord_Anagrams.txt");
-		writer.write(TwoWord_Anagrams);
+		input.close();
+//Generate txt file with possible words.
+		FileWriter writer = new FileWriter("/Users/Uday Indukuri/Desktop/Possible_Words.txt");
+		writer.write(Possible_Words);
 		writer.close();
-		System.out.println(TwoWord_Anagrams);
+		System.out.println(Possible_Words);
 	}
+	
+	//Function to filter out the word list based on char match and char frequency.
 	public static boolean isPossible(String word, HashMap<Character, Integer> hm) {
 		HashMap<Character, Integer> hm2 = new HashMap<Character, Integer>();
 		hm2.putAll(hm);
 		//System.out.println(word);
 		boolean res = true;
-	for(int j=0;j<word.length()-1;j++) {
-		char ch = word.replaceAll(" ", "").trim().charAt(j);
-		int val = hm2.get(ch);
-		//System.out.print(val+ " ");
-		if(val >= 0) {
-			hm2.put(ch, Integer.valueOf(val - 1));
-		}
-		else {
-			res = false;
-		}
-		for(int c:hm2.values()) {
-			if(c<0) {
-				res = false;
-			}
-		}
-	}
-	return res;
+	    for(int j=0;j<word.length();j++) {
+	    	char ch = word.replaceAll(" ", "").trim().charAt(j);
+		
+	    	if(!hm2.containsKey(ch)) {
+	    		return false;
+	    	}
+	    	else {
+	    		int val = hm2.get(ch);
+	    		if(val >= 0) {
+	    			hm2.put(ch, Integer.valueOf(val - 1));
+	    		}
+	    		else {
+	    			res = false;
+	    		}
+	    		for(int c:hm2.values()) {
+	    			if(c<0) {
+	    				res = false;
+	    			}
+	    		}
+	    	}
+	    }
+	    return res;
 }
 }
